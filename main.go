@@ -27,6 +27,7 @@ type Config struct {
 	dbDir   string
 	lang    string
 	ghToken string
+	port    string
 }
 
 func getConfig() Config {
@@ -45,6 +46,13 @@ func getConfig() Config {
 	c.ghToken = os.Getenv("GC_TOKEN")
 	if c.ghToken == "" {
 		log.Fatal("Must provide a github token in env var GC_TOKEN to proceed")
+	}
+
+	c.port = os.Getenv("PORT")
+	if c.port == "" {
+		c.port = ":80"
+	} else if !strings.HasPrefix(c.port, ":") {
+		c.port = ":" + c.port
 	}
 
 	return c
@@ -189,7 +197,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler(db))
 	r.PathPrefix("/static").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
-	log.Fatal(http.ListenAndServe(":8000", r))
+	log.Fatal(http.ListenAndServe(config.port, r))
 }
 
 type labelData struct {
