@@ -1,0 +1,106 @@
+@font-face { font-family: Go; src: url('/static/fonts/Go-Regular.ttf'); } 
+
+body {
+    font-family: Go;
+    padding: 0;
+    margin: 0;
+}
+
+table {
+    /* text-align: center; */
+    border-collapse: collapse;
+    width: 830px;
+}
+
+th {
+    padding: 0 20px 0 20px;
+    border-bottom: 2px solid black;
+}
+
+td {
+    border-bottom: 1px solid #cccccc;
+    padding: 4px 0 4px 0;
+}
+
+.title {
+    text-align: center; 
+    margin-top: 50px;
+}
+
+.sidebar {
+    position: fixed;
+    left: 20px;
+    top: 30%;
+}
+
+.sidebar span {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 1100px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+.table-container {
+    margin: auto;
+}
+
+.hidden-row {
+    display: none;
+}
+
+.label {
+    display: inline-block;
+    background-color: #35d548;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.875em;
+    cursor: pointer;
+    box-shadow: inset 0 -1px 0 rgba(27, 31, 35, 0.12);
+}
+
+.footer {
+    background-color: #e1ebf5;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: left;
+    margin-top: 50px;
+    padding: 25px 0 25px 0;
+}
+
+.desc-bubble {
+    position: relative;
+    display: inline-block;
+}
+
+
+.desc-bubble .desc-bubble-content {
+    width: 120px;
+    bottom: 100%;
+    left: 50%; 
+    margin-left: -60px;
+    visibility: hidden;
+    width: 120px;
+    background-color: #ffffdd;
+    text-align: center;
+    padding: 5px 0;
+    border: thin solid grey;
+    padding: 10px;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+.desc-bubble:hover .desc-bubble-content {
+    visibility: visible;
+}
+
+tr td:last-child {
+    width:1%;
+    white-space:nowrap;
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Help Wanted!</title>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+  </head>
+  <body>
+    <div class="title">
+      <h1>Go Contribute!</h1>
+    </div>
+    <div class="sidebar">
+      <span onclick="gotoTop()">↑ To top</span><br><br><span onclick="gotoBottom()">↓ To bottom</span>
+    </div>
+    <div class="table-container">
+      <table align="center" id="help-wanted-table">
+        <tr>
+          <th style="padding: 0 20px 0 0;"></th>
+          <th>Repo Name</th>
+          <th>Stars <i class="far fa-star"></i> </th>
+          <th>Forks <i class="fas fa-code-branch"></i></th>
+          <th>Labels <i class="fas fa-tag"></i> </th>
+        </tr>
+        {{ range .Repos }}
+        <tr class="hidden-row">
+          <td>
+            <span class="desc-bubble">
+              <i class="fas fa-file-alt"></i>
+              <div class="desc-bubble-content">{{ .Description }}</div>
+            </span>
+          </td>
+          <td width="20%"><a href="https://github.com/{{ .Name }}">{{ .Name }}</a></td>
+          <td style="text-align: center;">{{ .StarCt }}</td>
+          <td style="text-align: center;">{{ .ForkCt }}</td>
+          <td style="text-align: center;" data-repo="{{.Name}}">
+            {{ range .Labels }}
+            <div class="label" data-label="{{.LabelName}}" style="background-color: #{{.LabelColor}}; color:{{.LabelTxtColor}}">{{ .LabelName }}</div>&times;{{ .LabelCt }};
+            {{ end }}
+          </td>
+        </tr>
+        {{ end }}
+      </table>
+    </div>
+    <div class="footer">
+      <div style="padding-left: 100px;">
+        <a href="">Issues</a> | <a href="">Contributing</a>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="static/index.js"></script>
+</html>
