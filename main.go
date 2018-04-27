@@ -50,7 +50,7 @@ func getConfig() Config {
 
 	c.port = os.Getenv("PORT")
 	if c.port == "" {
-		c.port = ":80"
+		c.port = ":8080"
 	} else if !strings.HasPrefix(c.port, ":") {
 		c.port = ":" + c.port
 	}
@@ -175,9 +175,11 @@ func initializeDB(cfg Config) *sql.DB {
 }
 
 func main() {
+	log.Println("Loading configuration")
 	config := getConfig()
 
 	// Setup github client
+	log.Println("Setting up github client")
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: config.ghToken},
@@ -186,6 +188,7 @@ func main() {
 	client := github.NewClient(tc)
 
 	// Setup sqldb
+	log.Println("Initializing database")
 	db := initializeDB(config)
 
 	// Set up the concurrent routines to gather the data
@@ -194,6 +197,7 @@ func main() {
 	go repoScraper(client, db, repoStream, config.lang)
 	go labelScraper(client, repoStream, db)
 
+	log.Println("Starting server on port ", config.port)
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler(db))
 	r.PathPrefix("/static").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
