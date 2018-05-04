@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/alecthomas/template"
 	"github.com/google/go-github/github"
@@ -201,7 +202,16 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler(db))
 	r.PathPrefix("/static").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
-	log.Fatal(http.ListenAndServe(config.port, r))
+
+	server := &http.Server{
+		Addr:              config.port,
+		Handler:           r,
+		ReadTimeout:       time.Second,
+		ReadHeaderTimeout: time.Second,
+		WriteTimeout:      time.Second,
+		IdleTimeout:       time.Second,
+	}
+	log.Fatal(server.ListenAndServe())
 }
 
 type labelData struct {
